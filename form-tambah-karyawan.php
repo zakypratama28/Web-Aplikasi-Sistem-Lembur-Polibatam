@@ -1,3 +1,7 @@
+<?php 
+  include 'koneksi.php';
+
+?>
 <!doctype html>
 <html lang="en">
 
@@ -10,51 +14,27 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="lembur.css">
     <link rel="stylesheet" type="text/css" href="fontawesome/css/all.min.css">
-    <title>Dashboard</title>
+    <title>Tambah Karyawan</title>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-primary fixed-top">
-        <a class="navbar-brand" href="dashboard.php">Lembur Polibatam</a>
+    <a class="navbar-brand upper text-white" href="dashboard.php">
+        <h8>Sistem Lembur Politeknik Negeri Batam</h8></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <form class="form-inline my-2 my-lg-0 ml-auto">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0 bg-white" type="submit">Search</button>
+            <div class="icon ml-2">
+            <h5>
+                <a href="logout.php" button class="btn btn-outline-success my-0 my-sm-0 bg-white" type="logout">Logout</button></a>
+            </h5>
+            </div>
             </form>
         </div>
     </nav>
-    <div class="row no-gutters mt-5">
-        <div class="col-md-2 bg-dark mt-2 pr-3 pt-4">
-            <ul class="nav flex-column ml-3 mb-5">
-                <li class="nav-item">
-                    <a class="nav-link active text-white" href="dashboard.php"><i class="fas fa-tachometer-alt mr-2"></i>Dashboard</a>
-                    <hr class="bg-secondary">
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="form-lembur.php"><i class="fas fa-table mr-2"></i>Form Lembur</a>
-                    <hr class="bg-secondary">
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="data-lembur.php"><i class="fas fa-table mr-2"></i>Data Lembur</a>
-                    <hr class="bg-secondary">
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="data-karyawan.php"><i class="fas fa-users mr-2"></i>Data Karyawan</a>
-                    <hr class="bg-secondary">
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="data-honor.php"><i class="fas fa-table mr-2"></i>Honor</a>
-                    <hr class="bg-secondary">
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="detail-honor.php"><i class="fas fa-table mr-2"></i>Detail Honor</a>
-                    <hr class="bg-secondary">
-                </li>
-            </ul>
-        </div>
+    <?php include 'template/sidebar.php'; ?>
         <div class="col-md-10 p-5 pt-2">
             <h3><i class="fas fa-users mr-2"></i> Input Data Baru</h3>
             <hr>
@@ -62,7 +42,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label>NIK</label>
-                        <input type="text" name="nik" class="form-control" id="nik">
+                        <input type="text" name="NIK" class="form-control" id="NIK">
                     </div>
                 </div>
                 <div class="form-row">
@@ -80,21 +60,48 @@
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label>No.HP</label>
-                        <input type="text" name="jam_mulai" class="form-control" id="jam_mulai">
+                        <input type="text" name="telp" class="form-control" id="telp">
                     </div>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Pilih Kategori</label>
+                    <select class="form-control" id="kategori" name="kategori">
+                    <?php
+                        $sql = mysqli_query($koneksi, "SELECT * FROM kategori");
+                        while($data = mysqli_fetch_array($sql)) {?>
+                        <option value="<?= $data['id_kategori'] ?>"><?= $data['id_kategori']?></option>
+                    <?php } ?>
+                    </select>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label>No.Rekening</label>
-                        <input type="text" name="jam_selesai" class="form-control" id="jam_selesai">
+                        <input type="text" name="rekening" class="form-control" id="rekening">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label>Alamat</label>
-                        <input type="text" name="keterangan" class="form-control" id="Keterangan">
+                        <label>Username</label>
+                        <input type="text" name="username" class="form-control" id="username">
                     </div>
                 </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label>Password</label>
+                        <input type="text" name="password" class="form-control" id="password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">select role</label>
+                    <select class="form-control" id="role" name="role">
+                    <?php
+                        $sql = mysqli_query($koneksi, "SELECT * FROM role_user");
+                        while($data = mysqli_fetch_array($sql)) {?>
+                        <option value="<?= $data['id'] ?>"><?= $data['role']?></option>
+                    <?php } ?>
+                    </select>
+                </div>
+                
                 <button type="submit" class="btn btn-primary">SIMPAN</button>
             </form>
         </div>

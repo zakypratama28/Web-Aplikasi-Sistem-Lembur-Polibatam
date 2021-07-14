@@ -1,3 +1,8 @@
+<?php 
+  include 'koneksi.php';
+  include 'cek_status_login.php';
+  $user = $_SESSION['user'];
+?>
 <!doctype html>
 <html lang="en">
 
@@ -10,70 +15,78 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="lembur.css">
     <link rel="stylesheet" type="text/css" href="fontawesome/css/all.min.css">
-    <title>Dashboard</title>
+    <title>Data Honor</title>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-primary fixed-top">
-        <a class="navbar-brand" href="dashboard.php">Lembur Polibatam</a>
+    <a class="navbar-brand upper text-white" href="dashboard.php">
+        <h8>Sistem Lembur Politeknik Negeri Batam</h8></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <form class="form-inline my-2 my-lg-0 ml-auto">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0 bg-white" type="submit">Search</button>
+            <div class="icon ml-2">
+            <h5>
+                <a href="logout.php" button class="btn btn-outline-success my-0 my-sm-0 bg-white" type="logout">Logout</button></a>
+            </h5>
+            </div>
             </form>
         </div>
     </nav>
-    <div class="row no-gutters mt-5">
-        <div class="col-md-2 bg-dark mt-2 pr-3 pt-4">
-            <ul class="nav flex-column ml-3 mb-5">
-                <li class="nav-item">
-                    <a class="nav-link active text-white" href="dashboard.php"><i class="fas fa-tachometer-alt mr-2"></i>Dashboard</a>
-                    <hr class="bg-secondary">
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="form-lembur.php"><i class="fas fa-table mr-2"></i>Form Lembur</a>
-                    <hr class="bg-secondary">
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="data-lembur.php"><i class="fas fa-table mr-2"></i>Data Lembur</a>
-                    <hr class="bg-secondary">
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="data-karyawan.php"><i class="fas fa-table mr-2"></i>Data Karyawan</a>
-                    <hr class="bg-secondary">
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="data-honor.php"><i class="fas fa-table mr-2"></i>Honor</a>
-                    <hr class="bg-secondary">
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="detail-honor.php"><i class="fas fa-table mr-2"></i>Detail Honor</a>
-                    <hr class="bg-secondary">
-                </li>
-
-            </ul>
-        </div>
+    <?php include 'template/sidebar.php'; ?>
 
         <div class="col-md-10 p-5 pt-2">
             <h3><i class="fas fa-table mr-2"></i>Data Honor</h3>
             <hr>
+            <?php if($_SESSION['role'] == 'Kepala Unit'){?>
+            <a href="form-tambah-honor.php" class="btn btn-primary mb-2"> <i class="fas fa-plus-circle mr-2"></i>Add Data Honor</a>
+            <?php } ?>
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
                         <th scope="col">NO</th>
                         <th scope="col">Nama</th>
-                        <th scope="col">Kegiatan</th>
+                        <th scope="col">Kegiatan Lembur</th>
                         <th scope="col">Tanggal</th>
-                        <th scope="col">Jam</th>
-                        <th scope="col">istirahat</th>
-                        <th scope="col">Total Jam</th>
+                        <th scope="col">Jam Lembur</th>
+                        <th scope="col">Istirahat Lembur</th>
+                        <th scope="col">Total Jam Lembur</th>
                         <th scope="col">Uang Makan</th>
+                        <?php if($_SESSION['role'] == 'Kepala Unit'){?>
                         <th colspan="3" scope="col">Aksi</th>
+                        <?php } ?>
                     </tr>
                 </thead>
+        <tbody>
+          <?php
+              $i = 0;
+              $sql = mysqli_query($koneksi, "SELECT * FROM honor join user on user.username = honor.username order by tanggal");
+              while($data = mysqli_fetch_array($sql)) {
+            ?>
+          <tr>
+            
+            <td><?= ++$i ?></td>
+            <td><?php echo $data['nama']; ?></td>
+            <td><?php echo $data['kegiatan']; ?></td>
+            <td><?php echo $data['tanggal']; ?></td>
+            <td><?php echo $data['jam_lembur']; ?></td>
+            <td><?php echo $data['istirahat']; ?></td>
+            <td><?php echo $data['jml_jam_lembur']; ?></td>
+            <td><?php echo $data['uang_makan']; ?></td>
+            <?php if($_SESSION['role'] == 'Kepala Unit'){?>
+              <td><a class="fas fa-edit bg-success p-2 text-white rounded" href="ubah_honor.php?id_honor=<?php echo $data['id_honor']; ?>"></a></td>
+              
+              
+              <td><a class="fas fa-trash-alt bg-danger p-2 text-white rounded" href="hapus_honor.php?id_honor=<?php echo $data['id_honor']; ?>"></a></td>
+              <?php } ?>
+            </td>
+          </tr>
+          <?php 
+              }
+            ?>
+        </tbody>
             </table>
         </div>
 

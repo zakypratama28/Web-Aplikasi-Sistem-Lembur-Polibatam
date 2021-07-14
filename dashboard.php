@@ -1,3 +1,8 @@
+<?php 
+  include 'koneksi.php';
+  include 'cek_status_login.php';
+  $user = $_SESSION['user'];
+?>
 <!doctype html>
 <html lang="en">
 
@@ -11,51 +16,29 @@
     <link rel="stylesheet" type="text/css" href="lembur.css">
     <link rel="stylesheet" type="text/css" href="fontawesome/css/all.min.css">
     <title>Dashboard</title>
+
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-primary fixed-top">
-        <a class="navbar-brand" href="dashboard.php">Lembur Polibatam</a>
+        <a class="navbar-brand upper text-white" href="dashboard.php">
+        <h8>Sistem Lembur Politeknik Negeri Batam</h8></a>
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <form class="form-inline my-2 my-lg-0 ml-auto">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0 bg-white" type="submit">Search</button>
+            <div class="icon ml-2">
+            <h5>
+                <a href="logout.php" button class="btn btn-outline-success my-0 my-sm-0 bg-white" type="logout">Logout</button></a>
+            </h5>
+            </div>
             </form>
         </div>
     </nav>
-    <div class="row no-gutters mt-5">
-        <div class="col-md-2 bg-dark mt-2 pr-3 pt-4">
-            <ul class="nav flex-column ml-3 mb-5">
-                <li class="nav-item">
-                    <a class="nav-link active text-white" href="dashboard.php"><i class="fas fa-tachometer-alt mr-2"></i>Dashboard</a>
-                    <hr class="bg-secondary">
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="form-lembur.php"><i class="fas fa-table mr-2"></i>Form Lembur</a>
-                    <hr class="bg-secondary">
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="data-lembur.php"><i class="fas fa-table mr-2"></i>Data Lembur</a>
-                    <hr class="bg-secondary">
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="data-karyawan.php"><i class="fas fa-users mr-2"></i>Data Karyawan</a>
-                    <hr class="bg-secondary">
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="data-honor.php"><i class="fas fa-table mr-2"></i>Honor</a>
-                    <hr class="bg-secondary">
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="detail-honor.php"><i class="fas fa-table mr-2"></i>Detail Honor</a>
-                    <hr class="bg-secondary">
-                </li>
-            </ul>
-        </div>
-
+    <!-- masukin sidebar -->
+    <?php include 'template/sidebar.php';?>
         <!-- content -->
 
         <div class="card mt-5 ml-5" style="max-width: 1080px;">
@@ -66,15 +49,17 @@
                 <div class="col-md-7">
                     <div class="card-body">
                         <h4 class="card-title"><i class="fas fa-home"> Lemburan Polibatam Administrator</i></h4>
+                        <p>Anda Masuk Sebagai <?php echo $_SESSION['role'];?>!</p>
                         <p class="card-text">Semangat bekerja!!</br>
-                            Selamat datang di halaman admin Lemburan Politeknik Negeri Batam.</br>
+                            Selamat datang di halaman Lemburan Politeknik Negeri Batam.</br>
                             </br>Gunakan sistem ini untuk kepentingan Politeknik Negeri Batam.</p></br>
                         <p class="card-text"><small class="text-muted">Tim Support</small></p>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
+                                                    
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

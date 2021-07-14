@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="login.css">
 
-    <title>Form Login</title>
+    <title>Login Informatika</title>
 </head>
 
 <body>
@@ -20,20 +20,21 @@
             <div class="text-center">
                 <img src="img/logo.png" alt="logo-polibatam" style="width: 50%;">
             </div><br>
-            <h2 class="text-center">LOGIN SID POLIBATAM</h2>
+            <h4 class="text-center">LOGIN LEMBURAN POLIBATAM</h4>
             <hr>
-            <form>
+            <form action="cek_login.php"method="post">
                 <div class="form-group">
-
-                    <input type="text" name="username" class="form-control" placeholder="User ID">
-                </div><br>
-
-                <div class="form-group">
-
-                    <input type="text" name="password" class="form-control" placeholder="Password">
+                <label for="">Username</label>
+                <input type="text" class="form-control" name="username" placeholder="Username">
                 </div>
-            </form><br>
-            <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                <div class="form-group">
+                <label for="">Password</label>
+                <input type="password" class="form-control" name="password" placeholder="Password">
+                </div>
+                <div class="form-group my-4">
+                <input type="submit" class="btn btn-primary btn-block" value="Login">
+                </div>
+            </form>
         </div>
     </div>
 
