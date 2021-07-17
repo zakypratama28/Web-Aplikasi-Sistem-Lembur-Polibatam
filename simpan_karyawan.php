@@ -4,6 +4,7 @@
 
     $NIK = $_POST['NIK'];
     $nama = $_POST['nama'];
+    $jurusan = $_SESSION['jurusan'];
     $unit = $_POST['unit'];
     $telp = $_POST['telp'];
     $kategori = $_POST['kategori'];
@@ -12,7 +13,7 @@
     $password = $_POST['password'];
     $role = $_POST['role'];
 
-    $input = mysqli_query($koneksi,"INSERT INTO user (NIK,nama,username,password,role_id,unit,telp, kategori,rekening) VALUES('$NIK','$nama','$username','$password','$role','$unit','$telp','$kategori','$rekening')") or die(mysqli_error($koneksi));
+    $input = mysqli_query($koneksi,"INSERT INTO user (NIK,nama,jurusan,username,password,role_id,unit,telp, kategori,rekening) VALUES('$NIK','$nama','$jurusan','$username','$password','$role','$unit','$telp','$kategori','$rekening')") or die(mysqli_error($koneksi));
     if($input){
         echo "Data Berhasil Disimpan";
         header("location:data-karyawan.php"); 

@@ -13,6 +13,7 @@
     $_SESSION['user'] = $row['username'];
     $_SESSION['role'] = $row['role'];
     $_SESSION['status'] = 'login';
+    $_SESSION['jurusan'] = $row['jurusan'];
 
     header("location: dashboard.php");
   } else {

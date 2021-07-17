@@ -1,3 +1,22 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-primary fixed-top">
+        <a class="navbar-brand upper text-white" href="dashboard.php">
+        <h8>Sistem Lembur Politeknik Negeri Batam</h8></a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <form class="form-inline my-2 my-lg-0 ml-auto">
+            <div class="icon ml-2">
+            <h5>
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <a href="logout.php" button class="btn btn-outline-success my-0 my-sm-0 bg-white" type="logout">Logout</button></a>
+            </h5>
+            </div>
+            </form>
+        </div>
+    </nav>
+
 <div class="row no-gutters mt-5">
         <div class="col-md-2 bg-dark mt-2 pr-3 pt-4">
             <ul class="nav flex-column ml-3 mb-5">

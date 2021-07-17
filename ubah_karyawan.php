@@ -6,6 +6,7 @@ $NIK = $_GET['NIK_karyawan'];
 $result = mysqli_query($koneksi, "SELECT * FROM user where NIK = '$NIK'");
 while($user_data = mysqli_fetch_array($result)) {
     $nama = $user_data['nama'];
+    $jurusan = $user_data['jurusan'];
     $unit = $user_data['unit'];
     $telp = $user_data['telp'];
     $kategori = $user_data['kategori'];
@@ -27,22 +28,6 @@ while($user_data = mysqli_fetch_array($result)) {
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-primary fixed-top">
-    <a class="navbar-brand upper text-white" href="dashboard.php">
-        <h8>Sistem Lembur Politeknik Negeri Batam</h8></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <form class="form-inline my-2 my-lg-0 ml-auto">
-            <div class="icon ml-2">
-            <h5>
-                <a href="logout.php" button class="btn btn-outline-success my-0 my-sm-0 bg-white" type="logout">Logout</button></a>
-            </h5>
-            </div>
-            </form>
-        </div>
-    </nav>
     <?php include 'template/sidebar.php'; ?>
         <div class="col-md-10 p-5 pt-2">
             <h3><i class="fas fa-users mr-2"></i> Ubah Data Karyawan</h3>
