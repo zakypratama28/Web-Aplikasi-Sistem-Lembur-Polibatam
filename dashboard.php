@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="lembur.css">
     <link rel="stylesheet" type="text/css" href="fontawesome/css/all.min.css">
+    <link rel="shortcut icon" href="img/SLPB.png">
     <title>Dashboard</title>
 
 </head>
@@ -86,7 +87,7 @@
                 <div class="col-md-7">
                     <div class="card-body">
                         <h4 class="card-title"><i class="fas fa-home"> Lemburan Polibatam Administrator</i></h4>
-                        <p>Anda Masuk Sebagai <?php echo $_SESSION['role'];?>!</p>
+                        <p>Anda Masuk Sebagai <?= $_SESSION["role"]?> <?= $_SESSION['role'] != "Bagian Keuangan" ? $_SESSION['jurusan'] : '' ?>!</p>
                         <p class="card-text">Semangat bekerja!!</br>
                             Selamat datang di halaman Lemburan Politeknik Negeri Batam.</br>
                             </br>Gunakan sistem ini untuk kepentingan Politeknik Negeri Batam.</p></br>

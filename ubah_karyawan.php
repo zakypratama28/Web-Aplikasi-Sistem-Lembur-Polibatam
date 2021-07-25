@@ -1,5 +1,6 @@
 <?php
     include 'koneksi.php';
+    include 'cek_status_login.php';
     include 'kepalaUnitFilter.php';
 
 $NIK = $_GET['NIK_karyawan'];
@@ -40,12 +41,7 @@ while($user_data = mysqli_fetch_array($result)) {
                         <input type="text" name="nama" class="form-control" id="nama"value="<?php echo $nama;?>">
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label>Unit</label>
-                        <input type="text" name="unit" class="form-control" id="unit"value="<?php echo $unit;?>">
-                    </div>
-                </div>
+
                 <div class="form-row">
                     <div class="form-group col-md-3">
                         <label>No.HP</label>

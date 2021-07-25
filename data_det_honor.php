@@ -1,4 +1,7 @@
-<?php include 'koneksi.php'; ?>
+<?php 
+    include 'koneksi.php'; 
+    include 'cek_status_login.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,8 +62,9 @@
     <title>Data Detail Honor</title>
 </head>
 <body>
-    <p class="pdf-header">DAFTAR PEMBERIAN LEMBUR BAGI TENAGA KEPENDIDIKAN</p>
-    <p class="pdf-header">POLITEKNIK NEGERI BATAM BULAN DESEMBER 2021</p>
+
+    <h3 style="text-align: center;">DAFTAR PEMBERIAN LEMBUR BAGI <?= strtoupper($unit) ?> </h3>
+    <h3 style="text-align: center;">POLITEKNIK NEGERI BATAM BULAN <?= strtoupper($namaBulan.' '.$tahun) ?> </h3>
     <div class="col-md-10 p-5 pt-2">
             <hr>
             <table class="table table-striped table-bordered">
@@ -82,59 +86,52 @@
                 </thead>
                 <tbody>
           <?php
-           $i = 0;
-           for($x = 0; $x < date('m'); $x++){
-
-            $query ="SELECT user.username as username, sum(jam_lembur) as jam_lembur, sum(istirahat) as istirahat, kategori, tarif, nama, tanggal, sum(uang_makan) as uang_makan, rekening FROM honor join user on user.username=honor.username join kategori on user.kategori = kategori.id_kategori where MONTH(tanggal) = $x and YEAR(tanggal) <= date('Y') and jurusan = '".$_SESSION['jurusan']."'";
+          $query = "SELECT nama, kategori, tarif, tanggal, sum(jam_lembur) as jam_lembur, sum(uang_makan) as uang_makan, rekening FROM form_lembur JOIN honor on honor.id = form_lembur.id JOIN user on user.username = form_lembur.username join kategori on kategori.id_kategori = user.kategori where MONTH(tanggal) = $bulan and YEAR(tanggal) = $tahun and user.unit = '$unit' group by form_lembur.username, MONTH(tanggal), YEAR(tanggal)";
             
-            $sql = mysqli_query($koneksi, $query);
-            
-              while($data = mysqli_fetch_array($sql)) {
-                  if(isset($data['username'])){
-                      $jml_jam_lembur = $data['jam_lembur'] - $data['istirahat'];
-                      $jml_uang_lembur = $jml_jam_lembur * $data['tarif'];
-                      $jml_uang_makan_lembur = $data['uang_makan'] + $jml_uang_lembur;
-                      $uang_pph = $jml_uang_makan_lembur*0.05;
-                      $jml_honor_pajak = $jml_uang_makan_lembur - $uang_pph;
-
-                      ?>
-                    
-                    <tr>
-                        <td><?= ++$i ?></td>
-                        <td><?= $data['nama']; ?></td>
-                        <td><?= $data['kategori']; ?></td>
-                        <td><?= $data['tarif']; ?></td>
-                        <td><?= $data['tanggal']; ?></td>
-                        <td><?= $jml_jam_lembur ?></td>
-                        <td><?= $jml_uang_lembur ?></td>
-                        <td><?= $data['uang_makan'] ?></td>
-                        <td><?= $jml_uang_makan_lembur?></td>
-                        <td><?= $uang_pph ?></td>
-                        <td><?= $jml_honor_pajak ?></td>
-                        <td><?= $data['rekening'] ?></td>
-                    </tr>
-          <?php 
-                  }
-            }
-        }
-            ?>
-        </tbody>
-            </table>        
+          $sql = mysqli_query($koneksi, $query);
+          $i = 0; 
+            while($data = mysqli_fetch_array($sql)) {
+                $total_uang_lembur = $data['jam_lembur'] * $data['tarif'];
+                $total_uang_lembur_makan = $total_uang_lembur + $data['uang_makan'];
+                $uang_pph = round($total_uang_lembur_makan * 0.05);
+              ?>
+          
+          <tr>
+              <td><?= ++$i ?></td>
+              <td><?= $data['nama'] ?></td>
+              <td><?= $data['kategori']; ?></td>
+              <td><?= $data['tarif']; ?></td>
+              <td><?= date("m-Y", strtotime($data['tanggal'])); ?></td>
+              <td><?= $data['jam_lembur'] ?></td>
+              <td><?= $total_uang_lembur ?></td>
+              <td><?= $data['uang_makan'] ?></td>
+              <td><?= $total_uang_lembur_makan ?></td>
+              <td><?= $uang_pph ?></td>
+              <td><?= $total_uang_lembur_makan - $uang_pph ?></td>
+              <td><?= $data['rekening'] ?></td>
+          </tr>
+        <?php 
+      }
+          ?>
+      </tbody>
+          </table>
             <div class="signature-left">
                 <?php
                     $path = 'img/putih.png';
                     $data = file_get_contents($path);
                     $base64 = base64_encode($data);
-                ?>
+                ?>          
                 <p class="">Pejabat Pembuat Komitmen</p>
                 <img src="data:image/png;base64,<?= $base64 ?>">
-	            <p> <strong>Bambang Hendrawan</strong>  <br> <span>NIP.197706252012121003</span></p>
+	            <p> <strong>.......................................</strong>  
+                <br><br> <span>NIP.....................................</span></p>
             </div>
 
             <div class="signature-right">
-                <p>Pejabat Pembuat Komitmen</p>
+                <p>Bendahara Pengeluaran</p>
                 <img src="data:image/png;base64,<?= $base64 ?>">
-	            <p> <strong>Ratna Juwita</strong>  <br> <span> NIP.198602202015042003</span></p>
+	            <p> <strong>.......................................</strong>  
+                <br><br> <span>NIP.....................................</span></p>
             </div>
 </body>
 </html>

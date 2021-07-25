@@ -1,5 +1,7 @@
 <?php 
   include 'koneksi.php';
+  include 'cek_status_login.php';
+  include 'karyawanfilter.php';
 ?>
 <!doctype html>
 <html lang="en">
@@ -27,7 +29,12 @@
                 <label for="nama">Pilih Nama</label>
                 <select class="form-control" id="nama" name="username">
                 <?php
-                        $sql = mysqli_query($koneksi, "SELECT username, nama, jurusan, unit FROM user where jurusan='".$_SESSION['jurusan']."'");
+                        if($_SESSION['role'] == 'Bagian Keuangan'){
+                            $query = "SELECT username, nama, jurusan, unit FROM user";
+                        }else{
+                            $query = "SELECT username, nama, jurusan, unit FROM user where jurusan = '".$_SESSION['jurusan']."'";
+                        }
+                        $sql = mysqli_query($koneksi, $query);
                         while($data = mysqli_fetch_array($sql)) {?>
                         <option value="<?= $data['username'] ?>"><?= $data['nama']?></option>
                     <?php } ?>

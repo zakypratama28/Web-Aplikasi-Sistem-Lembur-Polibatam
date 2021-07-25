@@ -8,13 +8,7 @@
 
 <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="lembur.css">
-    <link rel="stylesheet" type="text/css" href="fontawesome/css/all.min.css">
+    <?php include 'template/header.php'; ?>
     <title>Detail Honor</title>
 </head>
 
@@ -25,18 +19,19 @@
         <div class="col-md-10 p-5 pt-2">
             <h3><i class="fas fa-table mr-2"></i>Detail Honor Lembur Karyawan</h3>
             <hr>
-            <table class="table table-striped table-bordered">
+            <div class="table-responsive">
+            <table class="table table-striped table-bordered" id="dataTable">
                 <thead>
                     <tr>
-                        <th scope="col">NO</th>
-                        <th scope="col">Nama Karyawan</th>
+                        <th scope="col">No</th>
+                        <th scope="col">Nama</th>
                         <th scope="col">Kategori</th>
                         <th scope="col">Tarif</th>
                         <th scope="col">Tanggal</th>
-                        <th scope="col">Jumlah Jam</th>
+                        <th scope="col">Jmlh Jam</th>
                         <th scope="col">Total Lembur</th>
                         <th scope="col">Uang Makan</th>
-                        <th scope="col">Total Lembur+Uang Makan</th>
+                        <th scope="col">Total Uang Lembur+Makan</th>
                         <th scope="col">PPh Pasal21</th>
                         <th scope="col">Total Honor Setelah Pajak</th>
                         <th scope="col">No.Rekening</th>
@@ -44,46 +39,83 @@
                 </thead>
                 <tbody>
           <?php
-           $i = 0;
-           for($x = 0; $x < date('m'); $x++){
 
-            $query ="SELECT user.username as username, sum(jam_lembur) as jam_lembur, sum(istirahat) as istirahat, kategori, tarif, nama, tanggal, sum(uang_makan) as uang_makan, rekening FROM honor  join user on user.username=honor.username join kategori on user.kategori = kategori.id_kategori where MONTH(tanggal) = $x and YEAR(tanggal) <= date('Y') and jurusan = '".$_SESSION['jurusan']."' group by honor.username";
+           if($_SESSION['role'] == "Bagian Keuangan"){ 
+           $query = "SELECT nama, kategori, tarif, tanggal, sum(jam_lembur) as jam_lembur, sum(uang_makan) as uang_makan, rekening FROM form_lembur JOIN honor on honor.id = form_lembur.id JOIN user on user.username = form_lembur.username join kategori on kategori.id_kategori = user.kategori group by form_lembur.username, MONTH(tanggal), YEAR(tanggal)";
+           }else{
+            $query = "SELECT nama, kategori, tarif, tanggal, sum(jam_lembur) as jam_lembur, sum(uang_makan) as uang_makan, rekening FROM honor JOIN form_lembur on honor.id = form_lembur.id JOIN user on user.username = form_lembur.username join kategori on kategori.id_kategori = user.kategori where user.jurusan = '".$_SESSION['jurusan']."' group by form_lembur.username, MONTH(tanggal), YEAR(tanggal)";
+           }
             
             $sql = mysqli_query($koneksi, $query);
-            
+            $i = 0; 
               while($data = mysqli_fetch_array($sql)) {
-                  if(isset($data['username'])){
-                      $jml_jam_lembur = $data['jam_lembur'] - $data['istirahat'];
-                      $jml_uang_lembur = $jml_jam_lembur * $data['tarif'];
-                      $jml_uang_makan_lembur = $data['uang_makan'] + $jml_uang_lembur;
-                      $uang_pph = $jml_uang_makan_lembur*0.05;
-                      $jml_honor_pajak = $jml_uang_makan_lembur - $uang_pph;
-
-                      ?>
-                    
-                    <tr>
-                        <td><?= ++$i ?></td>
-                        <td><?= $data['nama']; ?></td>
-                        <td><?= $data['kategori']; ?></td>
-                        <td><?= $data['tarif']; ?></td>
-                        <td><?= $data['tanggal']; ?></td>
-                        <td><?= $jml_jam_lembur ?></td>
-                        <td><?= $jml_uang_lembur ?></td>
-                        <td><?= $data['uang_makan'] ?></td>
-                        <td><?= $jml_uang_makan_lembur?></td>
-                        <td><?= $uang_pph ?></td>
-                        <td><?= $jml_honor_pajak ?></td>
-                        <td><?= $data['rekening'] ?></td>
-                    </tr>
+                  $total_uang_lembur = $data['jam_lembur'] * $data['tarif'];
+                  $total_uang_lembur_makan = $total_uang_lembur + $data['uang_makan'];
+                  $uang_pph = round($total_uang_lembur_makan * 0.05);
+                ?>
+            
+            <tr>
+                <td><?= ++$i ?></td>
+                <td><?= $data['nama'] ?></td>
+                <td><?= $data['kategori']; ?></td>
+                <td><?= $data['tarif']; ?></td>
+                <td><?= date("m-Y", strtotime($data['tanggal'])); ?></td>
+                <td><?= $data['jam_lembur'] ?></td>
+                <td><?= $total_uang_lembur ?></td>
+                <td><?= $data['uang_makan'] ?></td>
+                <td><?= $total_uang_lembur_makan ?></td>
+                <td><?= $uang_pph ?></td>
+                <td><?= $total_uang_lembur_makan - $uang_pph ?></td>
+                <td><?= $data['rekening'] ?></td>
+            </tr>
           <?php 
-                  }
-            }
         }
             ?>
         </tbody>
             </table>
             <?php if ($_SESSION['role'] == 'Bagian Keuangan'){?>
-                <a href="mpdf.php" class="btn btn-primary mb-2"> <i class="fas fa mr-2"></i>Cetak PDF</a>
+                
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cetakPdfModal">
+                <i class="fas fa mr-2"></i>Cetak PDF</a>
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="cetakPdfModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Download Detail Honor</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                    <form action="mpdf.php" method="post">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect1">Pilih Unit</label>
+                                <select class="form-control" id="unit" name="unit">
+                                <?php
+                                    $sql = mysqli_query($koneksi, "SELECT * FROM unit");
+                                    while($data = mysqli_fetch_array($sql)) {?>
+                                    <option value="<?= $data['nama_unit'] ?>"><?= $data['nama_unit']?></option>
+                                <?php } ?>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Bulan</label>
+                                <input type="month" name="bulan" class="form-control" id="bulan">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-primary">Download Data</button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+                </div>
             <?php } ?>
         </div>
         
@@ -91,9 +123,7 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <?php include 'template/footer.php'; ?>
 </body>
 
 </html>

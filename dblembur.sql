@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 11, 2021 at 06:25 PM
+-- Generation Time: Jul 24, 2021 at 08:00 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.14
 
@@ -24,49 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `bag_keuangan`
---
-
-CREATE TABLE `bag_keuangan` (
-  `NIK_keuangan` int(15) NOT NULL,
-  `nama` varchar(50) NOT NULL,
-  `unit` varchar(50) NOT NULL,
-  `telp` text NOT NULL,
-  `rekening` int(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `det_honor`
---
-
-CREATE TABLE `det_honor` (
-  `id_dethonor` int(100) NOT NULL,
-  `username` varchar(100) NOT NULL,
-  `kategori` varchar(10) NOT NULL,
-  `tarif` varchar(11) NOT NULL,
-  `tggl` date DEFAULT NULL,
-  `jml_jam` decimal(3,0) NOT NULL,
-  `jml_uang_lembur` varchar(11) NOT NULL,
-  `uang_makan` varchar(11) NOT NULL,
-  `jml_uang_lembur_makan` varchar(11) NOT NULL,
-  `PPh_pasal21` varchar(11) NOT NULL,
-  `jml_honor_pajak` varchar(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `det_honor`
---
-
-INSERT INTO `det_honor` (`id_dethonor`, `username`, `kategori`, `tarif`, `tggl`, `jml_jam`, `jml_uang_lembur`, `uang_makan`, `jml_uang_lembur_makan`, `PPh_pasal21`, `jml_honor_pajak`) VALUES
-(1, 'Fahrurzaky01', '0', '300000', '2021-02-28', '6', '100000', '50000', '150000', '120000', '150000'),
-(3, 'Fahrurzaky01', '872654', '3000000', '2020-02-25', '8', '100000', '50000', '150000', '40000', '700000'),
-(4, 'FebiolaSelvia18', 'I', '250', '2020-02-22', '6', '8', '9', '18', '200000', '90000');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `form_lembur`
 --
 
@@ -76,7 +33,7 @@ CREATE TABLE `form_lembur` (
   `tanggal` date NOT NULL,
   `jam_mulai` time NOT NULL,
   `jam_selesai` time NOT NULL,
-  `keterangan` varchar(100) NOT NULL
+  `keterangan` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -84,8 +41,12 @@ CREATE TABLE `form_lembur` (
 --
 
 INSERT INTO `form_lembur` (`id`, `username`, `tanggal`, `jam_mulai`, `jam_selesai`, `keterangan`) VALUES
-(2, 'FebiolaSelvia18', '2020-05-05', '18:00:00', '21:00:00', 'input nilai'),
-(3, 'beatrice', '2021-01-10', '15:00:00', '19:00:00', 'sesi');
+(33, 'Fahrurzaky01', '2021-07-22', '22:07:00', '04:13:00', 'gaming'),
+(34, 'sal', '2021-07-23', '23:24:00', '04:30:00', 'oe'),
+(35, 'dede', '2020-12-07', '16:39:00', '01:16:00', 'begadang'),
+(36, 'dede', '2020-12-08', '16:35:00', '23:06:00', 'gaming'),
+(37, 'dede', '2020-12-12', '07:58:00', '17:00:00', 'bersih'),
+(39, 'mar', '2021-07-26', '00:29:00', '23:32:00', 'tinggal');
 
 -- --------------------------------------------------------
 
@@ -94,67 +55,45 @@ INSERT INTO `form_lembur` (`id`, `username`, `tanggal`, `jam_mulai`, `jam_selesa
 --
 
 CREATE TABLE `honor` (
-  `id_honor` int(11) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `kegiatan` varchar(100) NOT NULL,
-  `tanggal` date NOT NULL,
-  `jam_lembur` decimal(3,0) NOT NULL,
-  `istirahat` int(7) NOT NULL,
-  `jml_jam_lembur` decimal(3,0) NOT NULL,
-  `uang_makan` int(11) NOT NULL
+  `id` int(11) NOT NULL,
+  `jam_lembur` varchar(5) NOT NULL,
+  `istirahat` varchar(2) NOT NULL,
+  `total_lembur` varchar(5) NOT NULL,
+  `uang_makan` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `honor`
 --
 
-INSERT INTO `honor` (`id_honor`, `username`, `kegiatan`, `tanggal`, `jam_lembur`, `istirahat`, `jml_jam_lembur`, `uang_makan`) VALUES
-(3, 'Fahrurzaky01', 'camping', '2021-06-05', '3', 1, '6', 50000),
-(4, 'Fahrurzaky01', 'Audit Internal', '2021-06-01', '6', 2, '12', 100000),
-(5, 'Fahrurzaky01', 'pekerjaan tes komisuoning panel surya', '2020-02-28', '8', 1, '7', 30000);
+INSERT INTO `honor` (`id`, `jam_lembur`, `istirahat`, `total_lembur`, `uang_makan`) VALUES
+(33, '6.10', '0', '6.10', '30000'),
+(34, '5.10', '0', '5.10', '30000'),
+(35, '8.616', '1', '7.616', '30000'),
+(36, '6.516', '0', '6.516', '30000'),
+(37, '9.033', '1', '8.033', '30000'),
+(39, '23.05', '2', '21.05', '30000');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `input_lembur`
+-- Table structure for table `jurusan`
 --
 
-CREATE TABLE `input_lembur` (
-  `nik` int(25) NOT NULL,
-  `nama` varchar(50) NOT NULL,
-  `jurusan` varchar(30) NOT NULL,
-  `tanggal` date NOT NULL,
-  `jam_mulai` time NOT NULL,
-  `jam_selesai` time NOT NULL,
-  `ket` varchar(254) NOT NULL
+CREATE TABLE `jurusan` (
+  `id_jurusan` varchar(20) NOT NULL,
+  `nama` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `input_lembur`
+-- Dumping data for table `jurusan`
 --
 
-INSERT INTO `input_lembur` (`nik`, `nama`, `jurusan`, `tanggal`, `jam_mulai`, `jam_selesai`, `ket`) VALUES
-(101, 'Jonson', 'informatika', '2021-07-06', '14:30:00', '17:00:00', 'lembur audit'),
-(102, 'eko', 'elektro', '2021-06-04', '13:00:00', '17:00:00', 'audit'),
-(103, 'doni', 'mesin', '2021-02-06', '16:00:00', '19:00:00', 'programing');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `karyawan`
---
-
-CREATE TABLE `karyawan` (
-  `username` varchar(50) NOT NULL,
-  `NIK_kepala` int(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `karyawan`
---
-
-INSERT INTO `karyawan` (`username`, `NIK_kepala`) VALUES
-('FebiolaSelvia18', 0);
+INSERT INTO `jurusan` (`id_jurusan`, `nama`) VALUES
+('EL', 'elektro'),
+('IF', 'informatika'),
+('MB', 'Manajemen Bisnis'),
+('MS', 'Mesin');
 
 -- --------------------------------------------------------
 
@@ -163,26 +102,18 @@ INSERT INTO `karyawan` (`username`, `NIK_kepala`) VALUES
 --
 
 CREATE TABLE `kategori` (
-  `id_kategori` int(1) NOT NULL,
-  `tarif` varchar(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `kepala_unit`
---
-
-CREATE TABLE `kepala_unit` (
-  `NIK_kepala` int(20) NOT NULL
+  `id_kategori` varchar(10) NOT NULL,
+  `tarif` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `kepala_unit`
+-- Dumping data for table `kategori`
 --
 
-INSERT INTO `kepala_unit` (`NIK_kepala`) VALUES
-(1467351);
+INSERT INTO `kategori` (`id_kategori`, `tarif`) VALUES
+('I', 13000),
+('II', 17000),
+('III', 20000);
 
 -- --------------------------------------------------------
 
@@ -207,6 +138,24 @@ INSERT INTO `role_user` (`id`, `role`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `unit`
+--
+
+CREATE TABLE `unit` (
+  `nama_unit` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `unit`
+--
+
+INSERT INTO `unit` (`nama_unit`) VALUES
+('Tenaga Kebersihan'),
+('Tenaga Pendidik');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
@@ -217,7 +166,9 @@ CREATE TABLE `user` (
   `is_active` int(11) NOT NULL DEFAULT 0,
   `NIK` varchar(50) NOT NULL,
   `nama` varchar(100) NOT NULL,
+  `jurusan` varchar(20) NOT NULL,
   `unit` varchar(30) NOT NULL,
+  `kategori` varchar(10) NOT NULL,
   `telp` varchar(20) NOT NULL,
   `rekening` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -226,53 +177,43 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`username`, `password`, `role_id`, `is_active`, `NIK`, `nama`, `unit`, `telp`, `rekening`) VALUES
-('beatrice', '1234', 2, 1, '9876', 'Betris', 'Keuangan', '0897', '9876'),
-('Fahrurzaky01', 'Fahrurzaky01', 1, 1, '331190', 'zaky', 'Kepala Unit', '0896', '1038'),
-('FebiolaSelvia18', 'Febiolaselvia18', 3, 1, '331180', 'febi', 'Karyawan', '0852', '9013');
+INSERT INTO `user` (`username`, `password`, `role_id`, `is_active`, `NIK`, `nama`, `jurusan`, `unit`, `kategori`, `telp`, `rekening`) VALUES
+('beatrice', '1234', 2, 1, '66666', 'Beatrice', 'IF', 'Tenaga Pendidik', 'III', '8888', '9999'),
+('dede', '123', 3, 0, '8765', 'eko sudarsono', 'EL', 'Tenaga Pendidik', 'III', '08527', '109721'),
+('dewi', '123', 2, 1, '146744', 'santoso haryono', 'EL', 'Tenaga Pendidik', 'II', '8888', '9999'),
+('eko', 'eko', 3, 1, '142019', 'Eko', 'MS', 'Tenaga Pendidik', 'III', '08726514', '919119'),
+('Fahrurzaky01', 'Fahrurzaky01', 1, 1, '331190', 'zaky', 'IF', 'Tenaga Pendidik', 'I', '0896', '1038'),
+('febi', 'febi', 3, 1, '4444', 'febi', 'IF', 'Tenaga Pendidik', 'II', '555555', '5555555555'),
+('mar', 'mar', 3, 0, '8988', 'maryam', 'IF', 'Tenaga Kebersihan', 'I', '8888', '9999'),
+('nugroho', '123', 1, 1, '8972', 'endang sutrisna', 'EL', 'Tenaga Pendidik', 'II', '081371', '109261'),
+('rizky', '123', 2, 1, '33333', 'rizky', 'MB', 'Tenaga Pendidik', 'II', '080808', '109381'),
+('sal', 'sal', 2, 1, '778899', 'arsal', 'MS', 'Tenaga Pendidik', 'II', '08961863', '9876'),
+('santoso', '1234', 1, 1, '87654', 'santoso', 'MB', 'Tenaga Pendidik', 'I', '0876', '45678'),
+('tama', 'tama', 1, 1, '43113', 'tama', 'MS', 'Tenaga Pendidik', 'I', '086829', '10963'),
+('zul', 'zul', 3, 1, '51381', 'zul', 'MB', 'Tenaga Pendidik', 'III', '086152', '98546');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `bag_keuangan`
---
-ALTER TABLE `bag_keuangan`
-  ADD PRIMARY KEY (`NIK_keuangan`);
-
---
--- Indexes for table `det_honor`
---
-ALTER TABLE `det_honor`
-  ADD PRIMARY KEY (`id_dethonor`),
-  ADD KEY `username` (`username`);
-
---
 -- Indexes for table `form_lembur`
 --
 ALTER TABLE `form_lembur`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `username` (`username`);
+  ADD KEY `form_lembur_ibfk_1` (`username`);
 
 --
 -- Indexes for table `honor`
 --
 ALTER TABLE `honor`
-  ADD PRIMARY KEY (`id_honor`),
-  ADD KEY `username` (`username`);
+  ADD KEY `id` (`id`);
 
 --
--- Indexes for table `input_lembur`
+-- Indexes for table `jurusan`
 --
-ALTER TABLE `input_lembur`
-  ADD PRIMARY KEY (`nik`);
-
---
--- Indexes for table `karyawan`
---
-ALTER TABLE `karyawan`
-  ADD PRIMARY KEY (`username`);
+ALTER TABLE `jurusan`
+  ADD PRIMARY KEY (`id_jurusan`);
 
 --
 -- Indexes for table `kategori`
@@ -281,72 +222,59 @@ ALTER TABLE `kategori`
   ADD PRIMARY KEY (`id_kategori`);
 
 --
--- Indexes for table `kepala_unit`
---
-ALTER TABLE `kepala_unit`
-  ADD PRIMARY KEY (`NIK_kepala`);
-
---
 -- Indexes for table `role_user`
 --
 ALTER TABLE `role_user`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `unit`
+--
+ALTER TABLE `unit`
+  ADD UNIQUE KEY `nama_unit` (`nama_unit`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`username`);
+  ADD PRIMARY KEY (`username`),
+  ADD KEY `kategori` (`kategori`),
+  ADD KEY `jurusan` (`jurusan`),
+  ADD KEY `user_ibfk_3` (`unit`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `det_honor`
---
-ALTER TABLE `det_honor`
-  MODIFY `id_dethonor` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
 -- AUTO_INCREMENT for table `form_lembur`
 --
 ALTER TABLE `form_lembur`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `honor`
---
-ALTER TABLE `honor`
-  MODIFY `id_honor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `det_honor`
---
-ALTER TABLE `det_honor`
-  ADD CONSTRAINT `det_honor_ibfk_1` FOREIGN KEY (`username`) REFERENCES `user` (`username`);
-
---
 -- Constraints for table `form_lembur`
 --
 ALTER TABLE `form_lembur`
-  ADD CONSTRAINT `form_lembur_ibfk_1` FOREIGN KEY (`username`) REFERENCES `user` (`username`);
+  ADD CONSTRAINT `form_lembur_ibfk_1` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `honor`
 --
 ALTER TABLE `honor`
-  ADD CONSTRAINT `honor_ibfk_1` FOREIGN KEY (`username`) REFERENCES `user` (`username`);
+  ADD CONSTRAINT `honor_ibfk_1` FOREIGN KEY (`id`) REFERENCES `form_lembur` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `karyawan`
+-- Constraints for table `user`
 --
-ALTER TABLE `karyawan`
-  ADD CONSTRAINT `karyawan_ibfk_1` FOREIGN KEY (`username`) REFERENCES `user` (`username`);
+ALTER TABLE `user`
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`kategori`) REFERENCES `kategori` (`id_kategori`),
+  ADD CONSTRAINT `user_ibfk_2` FOREIGN KEY (`jurusan`) REFERENCES `jurusan` (`id_jurusan`),
+  ADD CONSTRAINT `user_ibfk_3` FOREIGN KEY (`unit`) REFERENCES `unit` (`nama_unit`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

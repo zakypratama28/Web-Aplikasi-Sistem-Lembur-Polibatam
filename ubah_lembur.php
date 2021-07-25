@@ -1,10 +1,12 @@
 <?php 
-  include 'koneksi.php';
+    include 'koneksi.php';
+    include 'cek_status_login.php';
+    include 'karyawanfilter.php';
 
 $id = $_GET['id'];
 $result = mysqli_query($koneksi, "SELECT * FROM form_lembur join user on form_lembur.username = user.username WHERE id='$id'");
 while($user_data = mysqli_fetch_array($result)) {
-    $id = $user_data['id'];
+    
     $nama = $user_data['nama'];
     $tanggal = $user_data['tanggal'];
     $jam_mulai = $user_data['jam_mulai'];
@@ -67,7 +69,7 @@ while($user_data = mysqli_fetch_array($result)) {
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label>Keterangan</label>
+                        <label>Kegiatan</label>
                         <input type="text" name="keterangan" class="form-control" id="keterangan" value="<?php echo $keterangan;?>">
                     </div>
                 </div>

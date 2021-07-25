@@ -1,6 +1,7 @@
 <?php 
-  include 'koneksi.php';
-
+include 'koneksi.php';
+include 'cek_status_login.php';
+include 'kepalaUnitFilter.php';
 ?>
 <!doctype html>
 <html lang="en">
@@ -35,11 +36,15 @@
                         <input type="text" name="nama" class="form-control" id="nama">
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label>Unit</label>
-                        <input type="text" name="unit" class="form-control" id="unit">
-                    </div>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Pilih Unit</label>
+                    <select class="form-control" id="unit" name="unit">
+                    <?php
+                        $sql = mysqli_query($koneksi, "SELECT * FROM unit");
+                        while($data = mysqli_fetch_array($sql)) {?>
+                        <option value="<?= $data['nama_unit'] ?>"><?= $data['nama_unit']?></option>
+                    <?php } ?>
+                    </select>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-3">
@@ -76,10 +81,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="exampleFormControlSelect1">select role</label>
+                    <label for="exampleFormControlSelect1">Pilih Bagian</label>
                     <select class="form-control" id="role" name="role">
                     <?php
-                        $sql = mysqli_query($koneksi, "SELECT * FROM role_user");
+                        $sql = mysqli_query($koneksi, "SELECT * FROM role_user where id<>2"); // <> = tidak sama dengan dalam php
                         while($data = mysqli_fetch_array($sql)) {?>
                         <option value="<?= $data['id'] ?>"><?= $data['role']?></option>
                     <?php } ?>

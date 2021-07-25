@@ -9,7 +9,7 @@
             <form class="form-inline my-2 my-lg-0 ml-auto">
             <div class="icon ml-2">
             <h5>
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            
             <a href="logout.php" button class="btn btn-outline-success my-0 my-sm-0 bg-white" type="logout">Logout</button></a>
             </h5>
             </div>
