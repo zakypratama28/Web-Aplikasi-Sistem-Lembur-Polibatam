@@ -1,2 +1,2 @@
 # aplikasi-Lemburan-Polibatam
-Untuk Database terletak di dalam source code ini dengan nama dblembur
+Untuk Database terletak di dalam source code ini dengan nama dblembur,sql
