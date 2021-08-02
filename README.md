@@ -1,8 +1,3 @@
-
-<p align="center">
-  <a href="https://github.com/zakypratama28/Web-Aplikasi-Sistem-Lembur-Polibatam">
-    <img src="\lembur-polibatam\img\SLPB.png" alt=".." width="100" height="100">
-  </a>
 # Web Aplikasi Sistem Lembur Polibatam
 Note : Untuk Database terletak di dalam source code ini dengan nama dblembur.sql.
 ##
