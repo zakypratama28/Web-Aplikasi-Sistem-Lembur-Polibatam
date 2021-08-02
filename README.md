@@ -1,3 +1,5 @@
+![Logo Sistem Lembur Polibatam](https://user-images.githubusercontent.com/64214657/127834097-1a41d798-fcf2-43bd-95dd-f727ae7174e9.png)
+
 # Web Aplikasi Sistem Lembur Polibatam
 Note : Untuk Database terletak di dalam source code ini dengan nama dblembur.sql.
 ##
