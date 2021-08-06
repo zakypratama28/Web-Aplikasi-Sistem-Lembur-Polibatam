@@ -22,7 +22,7 @@
     <div class="col-md-10 p-5 pt-2">
       <h3><i class="fas fa-table mr-2"></i>Data Lembur</h3>
       <hr>
-      <?php if($_SESSION['role'] != 'Karyawan'){?>
+      <?php if($_SESSION['role'] == 'Kepala Unit'){?>
       <a href="form-tambah-lembur.php" class="btn btn-primary mb-2"> <i class="fas fa-plus-circle mr-2"></i>Add Data Lembur</a>
       <?php } ?>
       <div class="table-responsive">
@@ -38,7 +38,7 @@
             <th scope="col">Jam Mulai</th>
             <th scope="col">Jam Selesai</th>
             <th scope="col">Kegiatan</th>
-            <?php if($_SESSION['role'] != 'Karyawan'){?>
+            <?php if($_SESSION['role'] == 'Kepala Unit'){?>
             <th scope="col">Aksi</th>
             <?php } ?>
           </tr>
@@ -69,7 +69,7 @@
             <td><?php echo $data['jam_mulai']; ?></td>
             <td><?php echo $data['jam_selesai']; ?></td>
             <td><?php echo $data['keterangan']; ?></td>
-            <?php if($_SESSION['role'] != 'Karyawan'){?>
+            <?php if($_SESSION['role'] == 'Kepala Unit'){?>
               <td>
               <a class="fas fa-edit bg-success p-1 text-white rounded" href="ubah_lembur.php?id=<?php echo $data['id']; ?>"></a>
               <a class="fas fa-trash-alt bg-danger p-1 text-white rounded" onclick="deleteData('hapus_lembur.php?id=<?php echo $data['id']; ?>')"></a></td>

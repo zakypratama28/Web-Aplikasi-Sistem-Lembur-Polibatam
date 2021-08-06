@@ -40,11 +40,13 @@
                 <tbody>
           <?php
 
-           if($_SESSION['role'] == "Bagian Keuangan"){ 
-           $query = "SELECT nama, kategori, tarif, tanggal, sum(jam_lembur) as jam_lembur, sum(uang_makan) as uang_makan, rekening FROM form_lembur JOIN honor on honor.id = form_lembur.id JOIN user on user.username = form_lembur.username join kategori on kategori.id_kategori = user.kategori group by form_lembur.username, MONTH(tanggal), YEAR(tanggal)";
-           }else{
-            $query = "SELECT nama, kategori, tarif, tanggal, sum(jam_lembur) as jam_lembur, sum(uang_makan) as uang_makan, rekening FROM honor JOIN form_lembur on honor.id = form_lembur.id JOIN user on user.username = form_lembur.username join kategori on kategori.id_kategori = user.kategori where user.jurusan = '".$_SESSION['jurusan']."' group by form_lembur.username, MONTH(tanggal), YEAR(tanggal)";
-           }
+            if($_SESSION['role'] == "Bagian Keuangan"){ 
+                $query = "SELECT nama, kategori, tarif, tanggal, sum(jam_lembur) as jam_lembur, sum(uang_makan) as uang_makan, rekening FROM form_lembur JOIN honor on honor.id = form_lembur.id JOIN user on user.username = form_lembur.username join kategori on kategori.id_kategori = user.kategori group by form_lembur.username, MONTH(tanggal), YEAR(tanggal)";
+            }else if($_SESSION['role'] == "Kepala Unit"){
+                $query = "SELECT nama, kategori, tarif, tanggal, sum(jam_lembur) as jam_lembur, sum(uang_makan) as uang_makan, rekening FROM honor JOIN form_lembur on honor.id = form_lembur.id JOIN user on user.username = form_lembur.username join kategori on kategori.id_kategori = user.kategori where user.jurusan = '".$_SESSION['jurusan']."' group by form_lembur.username, MONTH(tanggal), YEAR(tanggal)";
+            }else{
+                $query = "SELECT nama, kategori, tarif, tanggal, sum(jam_lembur) as jam_lembur, sum(uang_makan) as uang_makan, rekening FROM honor JOIN form_lembur on honor.id = form_lembur.id JOIN user on user.username = form_lembur.username join kategori on kategori.id_kategori = user.kategori where form_lembur.username = '".$_SESSION['user']."'group by form_lembur.username, MONTH(tanggal), YEAR(tanggal)";
+            }
             
             $sql = mysqli_query($koneksi, $query);
             $i = 0; 

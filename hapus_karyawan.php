@@ -7,5 +7,4 @@ include 'kepalaUnitFilter.php';
 $NIK = $_GET['NIK_karyawan'];
 $result = mysqli_query($koneksi, "DELETE FROM user WHERE NIK='$NIK' and jurusan='".$_SESSION['jurusan']."'"); 
 header("Location:data-karyawan.php");
-var_dump($result);
 ?>

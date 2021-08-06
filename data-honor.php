@@ -45,9 +45,10 @@
 
               if($_SESSION['role'] == "Bagian Keuangan"){
                 $query = "SELECT * from honor join form_lembur on honor.id = form_lembur.id join user on form_lembur.username = user.username";
-              }
-              else{
-                $query = "SELECT * from honor join form_lembur on honor.id = form_lembur.id join user on form_lembur.username = user.username where user.jurusan = '".$_SESSION['jurusan']."'";
+              }else if($_SESSION['role'] == "Kepala Unit"){
+                $query = "SELECT * FROM honor join form_lembur on honor.id = form_lembur.id join user on form_lembur.username = user.username where user.jurusan = '".$_SESSION['jurusan']."'";
+              }else{
+                $query = "SELECT * FROM honor join form_lembur on honor.id = form_lembur.id join user on form_lembur.username = user.username where form_lembur.username = '".$_SESSION['user']."'";
               }
 
               $sql = mysqli_query($koneksi, $query);
